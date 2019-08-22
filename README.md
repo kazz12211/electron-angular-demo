@@ -25,3 +25,70 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+## Install Electron
+
+In terminal, execute the following command.
+
+```
+$ cd project_root_dir
+$ npm i --save-dev electron@latest
+```
+
+## Write bootstrap script file
+
+Add main.js (in this case) to project root directory.
+
+## Edit package.json for electron
+
+```
+ "name": "electron-angular-demo",
+  "version": "0.0.0",
+  "main": "main.js",  <== specify bootstrap script file
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "start:electron": "ng build --base-href ./ && ./node_modules/electron/dist/electron .", <== build and run command
+    "electron": "./node_modules/electron/dist/electron ." <== run electron
+  },
+```
+
+## To build electron app with Typescript compiler
+
+Edit tsconfig.json to use "es5" target compiler option.
+
+```
+"compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es5", <== Modification
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  },
+ ```
+
+
+ ## To suppress security warning
+
+ Add the following line in main.js.
+
+```
+ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+```
